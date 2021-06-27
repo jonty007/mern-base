@@ -1,0 +1,12 @@
+{
+  "AUTH.SIGN_UP.INVALID_EMAIL": "Invalid email.",
+  "AUTH.SIGN_UP.INVALID_FIRST_NAME": "Invalid first name.",
+  "AUTH.SIGN_UP.INVALID_LAST_NAME": "Invalid last name.",
+  "AUTH.SIGN_UP.INVALID_DOB": "Invalid DOB.",
+  "AUTH.SIGN_UP.INVALID_PASSWORD": "Invalid password.",
+  "AUTH.SIGN_UP.INVALID_PHONE": "Invalid phone.",
+  "AUTH.SIGN_UP.INVALID_FILE": "Invalid profile pic.",
+  "AUTH.LOGIN.INVALID_CREDENTIALS": "Invalid credentials.",
+  "AUTH.LOGIN.USER_NOT_FOUND": "Invalid email or password.",
+  "FILE.SERVICE.GET_LOCATION": "Invalid file."
+}
