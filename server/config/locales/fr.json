@@ -1,0 +1,12 @@
+{
+  "AUTH.SIGN_UP.INVALID_EMAIL": "mettre du texte en français ici",
+  "AUTH.SIGN_UP.INVALID_FIRST_NAME": "mettre du texte en français ici",
+  "AUTH.SIGN_UP.INVALID_LAST_NAME": "mettre du texte en français ici",
+  "AUTH.SIGN_UP.INVALID_DOB": "mettre du texte en français ici",
+  "AUTH.SIGN_UP.INVALID_PASSWORD": "mettre du texte en français ici",
+  "AUTH.SIGN_UP.INVALID_PHONE": "mettre du texte en français ici",
+  "AUTH.SIGN_UP.INVALID_FILE": "mettre du texte en français ici",
+  "AUTH.LOGIN.INVALID_CREDENTIALS": "mettre du texte en français ici",
+  "AUTH.LOGIN.USER_NOT_FOUND": "mettre du texte en français ici",
+  "FILE.SERVICE.GET_LOCATION": "mettre du texte en français ici"
+}
