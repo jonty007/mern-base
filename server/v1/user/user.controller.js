@@ -1,6 +1,5 @@
 import { Router } from 'express';
-import { getProfilePicture } from '../file/file.service';
-import { getUserDetails, getUserProfilePicture } from './user.service';
+import { getUserDetails, getUserProfilePicture, updateUserProfile } from './user.service';
 
 const user = Router();
 
@@ -13,13 +12,15 @@ const user = Router();
  *
  * @apiSuccessExample {json} Success-Response:
  * {
- *   userDetails: {
- *    "_id": "60d886870dcace6be6826d90",
- *    "firstName": "Abc",
- *    "lastName": "Xyz",
- *    "email": "abc@xyz.com",
- *    "phone": "7788991212",
- *    "dob": "1994-29-12"
+ *   data: {
+ *    userDetails: {
+ *      "_id": "60d886870dcace6be6826d90",
+ *      "firstName": "Abc",
+ *      "lastName": "Xyz",
+ *      "email": "abc@xyz.com",
+ *      "phone": "7788991212",
+ *      "dob": "1994-29-12"
+ *    }
  *  }
  * }
  * 
@@ -29,7 +30,6 @@ const user = Router();
 user.get('/user/me', async (req, res, next) => {
   try {
     const { userId } = req.user;
-    console.log(userId);
     const userDetails = await getUserDetails(userId);
     return res.send({ data: { userDetails } });
   } catch (e) {
@@ -62,6 +62,53 @@ user.get('/user/profile-picture', async (req, res, next) => {
     const { userId } = req.user;
     const imageDetails = await getUserProfilePicture(userId);
     return res.send({ data: { imageDetails } });
+  } catch (e) {
+    if (e.message) {
+      return res.status(405).send({
+        message: e.message
+      });
+    }
+    return next(e);
+  }
+});
+
+/**
+ * @api {put} /user/me
+ * @apiName User update
+ * @apiGroup User
+ *
+ * @apiHeader {String} authorization Users unique access-key.
+ * @apiHeader {String} Accept-Language language to get response for any messages from API. default to en (english)
+ *
+ * @apiParam (Body) {String} firstName
+ * @apiParam (Body) {String} lastName
+ * @apiParam (Body) {String} dob
+ * @apiParam (Body) {String} phone
+ * @apiParam (Body) {String} profileImageId
+ * 
+ *
+ * @apiSuccessExample {json} Success-Response:
+ * {
+ *   data: {
+ *    userDetails: {
+ *      "_id": "60d886870dcace6be6826d90",
+ *      "firstName": "Abc",
+ *      "lastName": "Xyz",
+ *      "email": "abc@xyz.com",
+ *      "phone": "7788991212",
+ *      "dob": "1994-29-12"
+ *    }
+ *  }
+ * }
+ *
+ * @apiError (Error 400) ValidationError Validation failed!
+ *
+ */
+user.put('/user/me', async (req, res, next) => {
+  try {
+    const { userId } = req.user;
+    const userDetails = await updateUserProfile(userId, req.body);
+    return res.send({ data: { userDetails } });
   } catch (e) {
     if (e.message) {
       return res.status(405).send({

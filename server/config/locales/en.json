@@ -8,5 +8,8 @@
   "AUTH.SIGN_UP.INVALID_FILE": "Invalid profile pic.",
   "AUTH.LOGIN.INVALID_CREDENTIALS": "Invalid credentials.",
   "AUTH.LOGIN.USER_NOT_FOUND": "Invalid email or password.",
-  "FILE.SERVICE.GET_LOCATION": "Invalid file."
+  "FILE.SERVICE.GET_LOCATION": "Invalid file.",
+  "USER.UPDATE.REQUIRED_FIRST_NAME": "Required first name.",
+  "USER.UPDATE.REQUIRED_DOB": "Required dob.",
+  "USER.UPDATE.REQUIRED_PROFILE_IMAGE": "Required profile image."
 }
