@@ -1,8 +1,9 @@
 import React from 'react';
 import Container from 'react-bootstrap/Container';
+import { SignUpUserPayload } from 'src/store/auth/auth-action-payloads';
 
 export interface DashboardDispatchProps {
-    updateUser: () => void;
+    updateUser: (payload: SignUpUserPayload) => void;
 }
 
 export interface DashboardStateProps {

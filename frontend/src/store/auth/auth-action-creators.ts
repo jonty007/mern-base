@@ -1,3 +1,4 @@
+import { SignUpUserPayload } from 'src/store/auth/auth-action-payloads';
 import { SET_USER_AUTH, SIGN_IN_USER, SIGN_UP_USER, START_SERVICE_CALL } from '../../store/auth/auth-action-names';
 import {
     SetUserAuthAction,
@@ -25,13 +26,11 @@ export function startServiceCall(): StartServiceCallAction {
     };
 }
 
-export function signUpUser(): SignUpUserAction {
+export function signUpUser(signUpUserPayload: SignUpUserPayload): SignUpUserAction {
     console.log('called signUp');
     return {
         type: SIGN_UP_USER,
-        payload: {
-            email: '',
-        },
+        payload: signUpUserPayload,
     };
 }
 

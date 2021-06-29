@@ -9,10 +9,15 @@ import { RootAction } from '../../store/action';
 import { SIGN_IN_USER, SIGN_UP_USER } from './auth-action-names';
 import { concat, Observable, of } from 'rxjs';
 import AuthServiceModel from '../../services/auth/model/service-model';
-import { AuthorizeUserRequest } from '../../services/auth/model/request-model';
-import { AuthorizeUserResponse, SignInUserResponsePayload } from '../../services/auth/model/response-model';
+import { AuthorizeUserRequest, SignUpUserRequest } from '../../services/auth/model/request-model';
+import {
+    AuthorizeUserResponse,
+    SignInUserResponsePayload,
+    SignUpUserResponse,
+} from '../../services/auth/model/response-model';
 import { setUserAuth, startServiceCall } from '../../store/auth/auth-action-creators';
 import { SignInUserAction, SignUpUserAction } from '../../store/auth/auth-action-types';
+import { SignUpUserPayload } from 'src/store/auth/auth-action-payloads';
 
 const signInUserEpic: Epic<RootAction, RootAction, RootState, Services> = (
     action$: ActionsObservable<RootAction>,
@@ -58,14 +63,16 @@ const signUpUserEpic: Epic<RootAction, RootAction, RootState, Services> = (
         concatMap((action) => {
             return concat(callAuthSignUpService(authService, action)).pipe(
                 mergeMap((response) => {
-                    const payload: SignInUserResponsePayload = JSON.parse(
-                        response.actionPayload
-                    ) as SignInUserResponsePayload;
-                    localStorage.setItem('token', payload.token);
-                    return concat(of(setUserAuth(payload.userId, payload.token)));
+                    const userId: string = response.data.user.id;
+                    const token: string = response.data.token;
+                    localStorage.setItem('token', token);
+                    console.log('success');
+                    return concat(of(setUserAuth(userId, token)));
                     //TODO: call setNextStep(DASHBOARD)
                 }),
                 catchError((errorResponse) => {
+                    localStorage.clear();
+                    console.log(errorResponse);
                     return concat(of(startServiceCall()));
                 })
             );
@@ -75,16 +82,18 @@ const signUpUserEpic: Epic<RootAction, RootAction, RootState, Services> = (
 function callAuthSignUpService(
     authService: AuthServiceModel,
     action: SignUpUserAction
-): Observable<AuthorizeUserResponse> {
+): Observable<SignUpUserResponse> {
     console.log('sign up called in epic');
-    const authorizeUserRequest: AuthorizeUserRequest = {
-        type: 'USER_LOG_IN',
-        payload: JSON.stringify({
-            userName: action.payload.email,
-            password: action.payload.email,
-        }),
+    const payload: SignUpUserPayload = action.payload;
+    const signUpUserRequest: SignUpUserRequest = {
+        firstName: payload.firstName,
+        lastName: payload.lastName,
+        email: payload.email,
+        phoneNumber: payload.phoneNumber,
+        dob: payload.dob,
+        profile: payload.profile,
     };
-    return authService.authorizeUser(authorizeUserRequest);
+    return authService.signUpUser(signUpUserRequest);
 }
 
 export default [signInUserEpic, signUpUserEpic];
