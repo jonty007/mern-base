@@ -81,7 +81,6 @@ export default class Dashboard extends React.Component<Props> {
     private submit(event: any) {
         event.preventDefault();
         //TODO: do validations
-        console.log('submit', this.state);
         const payload: UpdateUserProfilePayload = {
             firstName: this.state.firstName,
             lastName: this.state.lastName,
@@ -91,7 +90,6 @@ export default class Dashboard extends React.Component<Props> {
             profile: this.state.profile,
             profileId: this.state.profileId,
         };
-        console.log(payload);
         this.props.updateUser(payload);
     }
 

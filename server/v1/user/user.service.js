@@ -1,6 +1,5 @@
 import {User} from '../../db/models';
 import { getProfilePicture } from '../file/file.service';
-import validator from 'validator';
 import moment from 'moment';
 
 export async function getUserDetails(userId) {
@@ -19,12 +18,13 @@ export async function updateUserProfile(userId, data) {
   const {
     firstName,
     lastName,
-    phone,
+    phoneNumber,
     dob,
     profileImageId
   } = data;
 
-  if (!firstName || !validator.isAlpha(firstName)) {
+  console.log(firstName, lastName, phoneNumber, dob, profileImageId);
+  if (!firstName) {
     throw new Error('USER.UPDATE.REQUIRED_FIRST_NAME');
   }
 
@@ -39,7 +39,7 @@ export async function updateUserProfile(userId, data) {
   const updatedUser = await User.findByIdAndUpdate(userId, {
     firstName,
     lastName,
-    phone,
+    phone: phoneNumber,
     dob,
     profileImageId
   });

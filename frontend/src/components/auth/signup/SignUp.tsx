@@ -64,7 +64,6 @@ export default class SignUp extends React.Component<Props> {
     private submit(event: any) {
         event.preventDefault();
         //TODO: do validations
-        console.log('submit', this.state);
         const payload: SignUpUserPayload = {
             firstName: this.state.firstName,
             lastName: this.state.lastName,
@@ -73,7 +72,6 @@ export default class SignUp extends React.Component<Props> {
             dob: this.state.dob,
             profile: this.state.profile,
         };
-        console.log(payload);
         this.props.signUpUser(payload);
     }
 

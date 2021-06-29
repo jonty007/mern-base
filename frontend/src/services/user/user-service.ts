@@ -18,7 +18,6 @@ import { request } from 'http';
 
 const USER_SERVICE: UserServiceModel = {
     fetchUserDetails: (request: FetchUserDetailsRequest): Observable<FetchUserDetailsResponse> => {
-        console.log('sign in request final', request);
         return ajax({
             url: 'http://localhost:4001/api/v1/user/me',
             method: 'GET',
@@ -30,8 +29,6 @@ const USER_SERVICE: UserServiceModel = {
     },
 
     fetchUserProfilePicture: (request: FetchUserProfilePictureRequest): Observable<FetchUserProfilePictureResponse> => {
-        console.log('sign up request final', request);
-
         return ajax({
             url: 'http://localhost:4001/api/v1/user/profile-picture',
             method: 'GET',
@@ -47,7 +44,7 @@ const USER_SERVICE: UserServiceModel = {
         formdata.append('profile', request.profile);
 
         return ajax({
-            url: 'http://localhost:4001/api/v1//file/profile-upload',
+            url: 'http://localhost:4001/api/v1/file/profile-upload',
             method: 'POST',
             headers: {
                 Authorization: 'Bearer ' + request.token,

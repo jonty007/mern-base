@@ -12,13 +12,8 @@ export async function signUp(data, file) {
   }
 
   // required
-  if (!firstName || !validator.isAlpha(firstName)) {
+  if (!firstName) {
     throw new Error('AUTH.SIGN_UP.INVALID_FIRST_NAME');
-  }
-
-  // not required, validate only if present
-  if (lastName && !validator.isAlpha(lastName)) {
-    throw new Error('AUTH.SIGN_UP.INVALID_LAST_NAME');
   }
 
   if (!dob || !moment(dob, 'YYYY-MM-DD').isValid()) {
@@ -27,7 +22,6 @@ export async function signUp(data, file) {
 
   if (
     !password ||
-    !validator.isAlphanumeric(password) ||
     !validator.isLength(password, { min: 8 })
   ) {
     throw new Error('AUTH.SIGN_UP.INVALID_PASSWORD');

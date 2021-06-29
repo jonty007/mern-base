@@ -50,7 +50,6 @@ const auth = Router();
  */
 auth.post('/auth/sign-up', upload.single('profile'), async (req, res, next) => {
   try {
-    console.log('here', req.body);
     const {userId, token} = await signUp(req.body, req.file);
 
     return res.send({data: {token, user: {id: userId}}})
