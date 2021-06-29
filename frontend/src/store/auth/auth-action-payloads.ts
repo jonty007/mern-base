@@ -9,5 +9,10 @@ export interface SetUserAuthPayload {
 }
 
 export interface SignUpUserPayload {
+    firstName: string;
+    lastName: string;
     email: string;
+    phoneNumber: string;
+    dob: string;
+    profile: File;
 }
