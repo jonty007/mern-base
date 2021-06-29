@@ -4,5 +4,6 @@ export default interface UserState {
     email: string;
     phone: string;
     dob: string;
-    profile: File;
+    profilePictureBase64: string;
+    profilePictureId: string;
 }

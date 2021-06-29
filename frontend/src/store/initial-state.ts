@@ -17,5 +17,6 @@ export const INITIAL_USER_STATE: UserState = {
     email: '',
     phone: '',
     dob: '',
-    profile: undefined as any,
+    profilePictureBase64: undefined as any,
+    profilePictureId: '',
 };

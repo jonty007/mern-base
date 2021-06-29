@@ -19,7 +19,8 @@ const user = Router();
  *      "lastName": "Xyz",
  *      "email": "abc@xyz.com",
  *      "phone": "7788991212",
- *      "dob": "1994-29-12"
+ *      "dob": "1994-29-12",
+ *      "profileImageId": ""
  *    }
  *  }
  * }

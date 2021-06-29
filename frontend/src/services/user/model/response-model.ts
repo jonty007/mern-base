@@ -13,8 +13,29 @@ export interface UserDetails {
     email: string;
     phone: string;
     dob: string;
+    profileImageId: string;
 }
 
-export interface FetchUserProfileResponse {
-    profile: File;
+export interface FetchUserProfilePictureResponse {
+    data: ImageDetails;
+}
+
+export interface ImageDetails {
+    imageDetails: ImageDetailsData;
+}
+
+export interface ImageDetailsData {
+    base64: string;
+}
+
+export interface UpdateProfilePictureResponse {
+    data: UpdateProfilePictureData;
+}
+
+export interface UpdateProfilePictureData {
+    fileId: string;
+}
+
+export interface UpdateUserProfileResponse {
+    data: UserDetailsData;
 }

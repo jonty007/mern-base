@@ -13,5 +13,15 @@ export interface SetUserDetailsPayload {
 }
 
 export interface SetUserProfilePicturePayload {
-    profilePicture: File;
+    profilePicture: string;
+}
+
+export interface UpdateUserProfilePayload {
+    firstName: string;
+    lastName: string;
+    email: string;
+    phoneNumber: string;
+    dob: string;
+    profile: File;
+    profileId: string;
 }

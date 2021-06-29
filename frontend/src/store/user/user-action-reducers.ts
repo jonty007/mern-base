@@ -11,10 +11,11 @@ const setUserDetails = produce((draftState: UserState, payload: SetUserDetailsPa
     draftState.firstName = payload.userDetails.firstName;
     draftState.lastName = payload.userDetails.lastName;
     draftState.phone = payload.userDetails.phone;
+    draftState.profilePictureId = payload.userDetails.profileImageId;
 });
 
 const setUserProfilePicture = produce((draftState: UserState, payload: SetUserProfilePicturePayload) => {
-    draftState.profile = payload.profilePicture;
+    draftState.profilePictureBase64 = payload.profilePicture;
 });
 
 export default function userReducer(state = INITIAL_USER_STATE, action: UserActionTypes): UserState {

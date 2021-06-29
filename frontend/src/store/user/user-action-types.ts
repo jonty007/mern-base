@@ -3,12 +3,14 @@ import {
     FETCH_USER_PROFILE_PICTURE,
     SET_USER_DETAILS,
     SET_USER_PROFILE_PICTURE,
+    UPDATE_USER_PROFILE,
 } from 'src/store/user/user-action-names';
 import {
     FetchUserDetailsPayload,
     FetchUserProfilePicturePayload,
     SetUserDetailsPayload,
     SetUserProfilePicturePayload,
+    UpdateUserProfilePayload,
 } from 'src/store/user/user-action-payloads';
 
 export interface FetchUserDetailsAction {
@@ -31,8 +33,14 @@ export interface SetUserProfilePictureAction {
     payload: SetUserProfilePicturePayload;
 }
 
+export interface UpdateUserProfileAction {
+    type: typeof UPDATE_USER_PROFILE;
+    payload: UpdateUserProfilePayload;
+}
+
 export type UserActionTypes =
     | FetchUserDetailsAction
     | FetchUserProfilePictureAction
     | SetUserDetailsAction
-    | SetUserProfilePictureAction;
+    | SetUserProfilePictureAction
+    | UpdateUserProfileAction;
