@@ -38,7 +38,7 @@ file.post('/file/profile-upload', upload.single('profile'), async (req, res, nex
     return res.send({ data: { fileId: uploadedFile._id.toString() } });
   } catch (e) {
     if (e.message) {
-      return res.status(405).send({
+      return res.status(400).send({
         message: e.message
       });
     }
