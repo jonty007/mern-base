@@ -8,7 +8,6 @@ import {
 } from '../../store/auth/auth-action-types';
 
 export function signInUser(email: string, password: string): SignInUserAction {
-    console.log('action creator called');
     return {
         type: SIGN_IN_USER,
         payload: {
@@ -19,7 +18,6 @@ export function signInUser(email: string, password: string): SignInUserAction {
 }
 
 export function startServiceCall(): StartServiceCallAction {
-    console.log('start service call');
     return {
         type: START_SERVICE_CALL,
         payload: {},
@@ -27,7 +25,6 @@ export function startServiceCall(): StartServiceCallAction {
 }
 
 export function signUpUser(signUpUserPayload: SignUpUserPayload): SignUpUserAction {
-    console.log('called signUp');
     return {
         type: SIGN_UP_USER,
         payload: signUpUserPayload,
@@ -35,7 +32,6 @@ export function signUpUser(signUpUserPayload: SignUpUserPayload): SignUpUserActi
 }
 
 export function setUserAuth(userId: string, token: string): SetUserAuthAction {
-    console.log();
     return {
         type: SET_USER_AUTH,
         payload: {

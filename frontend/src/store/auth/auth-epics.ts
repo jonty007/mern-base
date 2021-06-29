@@ -67,13 +67,11 @@ const signUpUserEpic: Epic<RootAction, RootAction, RootState, Services> = (
                     const userId: string = response.data.user.id;
                     const token: string = response.data.token;
                     localStorage.setItem('token', token);
-                    console.log('success');
                     return concat(of(setUserAuth(userId, token)));
                     //TODO: call setNextStep(DASHBOARD)
                 }),
                 catchError((errorResponse) => {
                     localStorage.clear();
-                    console.log(errorResponse);
                     return concat(of(startServiceCall()));
                 })
             );
@@ -84,7 +82,6 @@ function callAuthSignUpService(
     authService: AuthServiceModel,
     action: SignUpUserAction
 ): Observable<SignUpUserResponse> {
-    console.log('sign up called in epic');
     const payload: SignUpUserPayload = action.payload;
     const signUpUserRequest: SignUpUserRequest = {
         firstName: payload.firstName,

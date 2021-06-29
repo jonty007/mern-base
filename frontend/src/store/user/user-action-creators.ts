@@ -16,7 +16,6 @@ import {
 } from '../../store/user/user-action-types';
 
 export function fetchUserDetails(token: string): FetchUserDetailsAction {
-    console.log('action creator called');
     return {
         type: FETCH_USER_DETAILS,
         payload: {
@@ -26,7 +25,6 @@ export function fetchUserDetails(token: string): FetchUserDetailsAction {
 }
 
 export function fetchUserProfilePicture(token: string): FetchUserProfilePictureAction {
-    console.log('action creator called');
     return {
         type: FETCH_USER_PROFILE_PICTURE,
         payload: {

@@ -18,6 +18,9 @@ export default function(app) {
   /* User */
   v1router.use(require('../v1/user/user.controller').default);
 
+  /* File */
+  v1router.use(require('../v1/file/file.controller').default);
+
   /* Matches in client dist folder for any unmatched routes */
   if (apidoc === true) {
     app.use('/apidoc', express.static(path.join(__dirname, '../dist/apidoc')));

@@ -19,7 +19,6 @@ const setNextStepEpic: Epic<RootAction, RootAction, RootState, Services> = (
     action$.pipe(
         filter(isOfType(SET_NEXT_STEP)),
         tap((action) => {
-            console.log('epic called with action: ', action);
             if (isNotBlankString(STEP_ROUTE_MAP[action.payload.step])) {
                 history.push(STEP_ROUTE_MAP[action.payload.step]);
             }

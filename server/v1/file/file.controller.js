@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import multer from 'multer';
+import { saveProfileFile } from './file.service';
 
 // To parse file data
 const upload = multer();
@@ -45,3 +46,5 @@ file.post('/file/profile-upload', upload.single('profile'), async (req, res, nex
     return next(e);
   }
 });
+
+export default file;

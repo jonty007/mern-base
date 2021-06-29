@@ -7,7 +7,6 @@ import { ajax } from 'rxjs/ajax';
 
 const AUTH_SERVICE: PAVAuthServiceModel = {
     authorizeUser: (request: AuthorizeUserRequest): Observable<AuthorizeUserResponse> => {
-        console.log(request);
         const authorizeUserResponse: AuthorizeUserResponse = {
             type: 'someType',
             actionPayload: JSON.stringify({
@@ -19,7 +18,6 @@ const AUTH_SERVICE: PAVAuthServiceModel = {
     },
 
     signInUser: (request: SignInUserRequest): Observable<SignInUserResponse> => {
-        console.log('sign in request final', request);
         return ajax({
             url: 'http://localhost:4001/api/v1/auth/login',
             method: 'POST',
@@ -28,7 +26,6 @@ const AUTH_SERVICE: PAVAuthServiceModel = {
     },
 
     signUpUser: (request: SignUpUserRequest): Observable<SignUpUserResponse> => {
-        console.log('sign up request final', request);
         const formdata: FormData = new FormData();
         formdata.append('email', request.email);
         formdata.append('firstName', request.firstName);
@@ -39,7 +36,7 @@ const AUTH_SERVICE: PAVAuthServiceModel = {
         formdata.append('profile', request.profile);
 
         return ajax({
-            url: 'https://localhost:4001/api/v1/auth/sign-up',
+            url: 'http://localhost:4001/api/v1/auth/sign-up',
             method: 'POST',
             body: formdata,
         }).pipe(map((response) => response.response as SignUpUserResponse));
