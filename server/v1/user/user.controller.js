@@ -34,7 +34,7 @@ user.get('/user/me', async (req, res, next) => {
     return res.send({ data: { userDetails } });
   } catch (e) {
     if (e.message) {
-      return res.status(405).send({
+      return res.status(400).send({
         message: e.message
       });
     }
@@ -64,7 +64,7 @@ user.get('/user/profile-picture', async (req, res, next) => {
     return res.send({ data: { imageDetails } });
   } catch (e) {
     if (e.message) {
-      return res.status(405).send({
+      return res.status(400).send({
         message: e.message
       });
     }
@@ -111,7 +111,7 @@ user.put('/user/me', async (req, res, next) => {
     return res.send({ data: { userDetails } });
   } catch (e) {
     if (e.message) {
-      return res.status(405).send({
+      return res.status(400).send({
         message: e.message
       });
     }

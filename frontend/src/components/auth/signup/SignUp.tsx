@@ -50,15 +50,21 @@ export default class SignUp extends React.Component<Props> {
         const value = target.value;
         const name = target.name;
 
-        this.setState({
-            [name]: value,
-        });
+        if (target.files && target.files[0]) {
+            this.setState({
+                [name]: target.files[0],
+            });
+        } else {
+            this.setState({
+                [name]: value,
+            });
+        }
     }
 
     private submit(event: any) {
         event.preventDefault();
         //TODO: do validations
-        console.log(this.state);
+        console.log('submit', this.state);
         const payload: SignUpUserPayload = {
             firstName: this.state.firstName,
             lastName: this.state.lastName,

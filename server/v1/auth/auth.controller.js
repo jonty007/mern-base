@@ -50,13 +50,14 @@ const auth = Router();
  */
 auth.post('/auth/sign-up', upload.single('profile'), async (req, res, next) => {
   try {
+    console.log('here', req.body);
     const {userId, token} = await signUp(req.body, req.file);
 
     return res.send({data: {token, user: {id: userId}}})
     
   } catch (e) {
     if (e.message) {
-      return res.status(405).send({
+      return res.status(400).send({
         message: e.message
       });
     }
@@ -101,7 +102,7 @@ auth.post('/auth/login', async (req, res, next) => {
     return res.send({data: {token, user: {id: userId}}})
   } catch (e) {
     if (e.message) {
-      return res.status(405).send({
+      return res.status(400).send({
         message: e.message
       });
     }
