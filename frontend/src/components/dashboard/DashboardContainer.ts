@@ -6,7 +6,12 @@ import { signUpUser } from '../../store/auth/auth-action-creators';
 
 function mapStateToProps(state: RootState): DashboardStateProps {
     return {
-        firstName: 'false',
+        firstName: state.user.firstName,
+        lastName: state.user.lastName,
+        email: state.user.email,
+        dob: state.user.dob,
+        phone: state.user.phone,
+        profile: state.user.profile,
     };
 }
 

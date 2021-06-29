@@ -1,6 +1,6 @@
 import { Observable, of } from 'rxjs';
-import { AuthorizeUserRequest, SignUpUserRequest } from 'src/services/auth/model/request-model';
-import { AuthorizeUserResponse, SignUpUserResponse } from 'src/services/auth/model/response-model';
+import { AuthorizeUserRequest, SignInUserRequest, SignUpUserRequest } from 'src/services/auth/model/request-model';
+import { AuthorizeUserResponse, SignInUserResponse, SignUpUserResponse } from 'src/services/auth/model/response-model';
 import PAVAuthServiceModel from 'src/services/auth/model/service-model';
 import { map } from 'rxjs/operators';
 import { ajax } from 'rxjs/ajax';
@@ -17,6 +17,16 @@ const AUTH_SERVICE: PAVAuthServiceModel = {
         };
         return of(authorizeUserResponse);
     },
+
+    signInUser: (request: SignInUserRequest): Observable<SignInUserResponse> => {
+        console.log('sign in request final', request);
+        return ajax({
+            url: 'http://localhost:4001/api/v1/auth/login',
+            method: 'POST',
+            body: request,
+        }).pipe(map((response) => response.response as SignInUserResponse));
+    },
+
     signUpUser: (request: SignUpUserRequest): Observable<SignUpUserResponse> => {
         console.log('sign up request final', request);
         const formdata: FormData = new FormData();
@@ -29,7 +39,7 @@ const AUTH_SERVICE: PAVAuthServiceModel = {
         formdata.append('profile', request.profile);
 
         return ajax({
-            url: 'http://localhost:4001/api/v1/auth/sign-up',
+            url: 'https://localhost:4001/api/v1/auth/sign-up',
             method: 'POST',
             body: formdata,
         }).pipe(map((response) => response.response as SignUpUserResponse));

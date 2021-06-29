@@ -8,9 +8,11 @@ export interface DashboardDispatchProps {
 
 export interface DashboardStateProps {
     firstName: string;
-    lastName?: string;
-    email?: string;
-    dob?: string;
+    lastName: string;
+    email: string;
+    dob: string;
+    phone: string;
+    profile: File;
 }
 
 type Props = DashboardDispatchProps & DashboardStateProps;
@@ -21,8 +23,10 @@ export default class Dashboard extends React.Component<Props> {
             <>
                 <Container>
                     <div>First Name: {this.props.firstName}</div>
-                    <div>First Name</div>
-                    <div>First Name</div>
+                    <div>Last Name: {this.props.lastName}</div>
+                    <div>DOB: {this.props.dob}</div>
+                    <div>EMAIL: {this.props.email}</div>
+                    <div>Phone: {this.props.phone}</div>
                 </Container>
             </>
         );

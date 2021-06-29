@@ -3,6 +3,11 @@ export interface AuthorizeUserRequest {
     payload: string;
 }
 
+export interface SignInUserRequest {
+    email: string;
+    password: string;
+}
+
 export interface SignUpUserRequest {
     firstName: string;
     lastName: string;
