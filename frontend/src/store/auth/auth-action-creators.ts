@@ -7,12 +7,12 @@ import {
     StartServiceCallAction,
 } from '../../store/auth/auth-action-types';
 
-export function signInUser(userId: string, password: string): SignInUserAction {
+export function signInUser(email: string, password: string): SignInUserAction {
     console.log('action creator called');
     return {
         type: SIGN_IN_USER,
         payload: {
-            userId: userId,
+            userId: email,
             password: password,
         },
     };

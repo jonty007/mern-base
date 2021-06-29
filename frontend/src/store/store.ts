@@ -7,11 +7,13 @@ import { RootAction } from './action';
 import { Services } from './services';
 import history from '../routing/history';
 import AUTH_SERVICE from '../services/auth/auth-service';
+import USER_SERVICE from '../services/user/user-service';
 
 const epicMiddleware = createEpicMiddleware<RootAction, RootAction, RootState, Services>({
     dependencies: {
         history: history,
         authService: AUTH_SERVICE,
+        userService: USER_SERVICE,
     },
 });
 

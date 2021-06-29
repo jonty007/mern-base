@@ -1,5 +1,7 @@
 import {User} from '../../db/models';
 import { getProfilePicture } from '../file/file.service';
+import validator from 'validator';
+import moment from 'moment';
 
 export async function getUserDetails(userId) {
   const user = await User.findById(userId);
@@ -53,6 +55,7 @@ function convertToUserDTO(user) {
     lastName: user.lastName,
     email: user.email,
     phone: user.phone,
-    dob: user.dob
+    dob: user.dob,
+    profileImageId: user.profileImageId.toString()
   }
 }

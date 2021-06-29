@@ -9,15 +9,12 @@ import { RootAction } from '../../store/action';
 import { SIGN_IN_USER, SIGN_UP_USER } from './auth-action-names';
 import { concat, Observable, of } from 'rxjs';
 import AuthServiceModel from '../../services/auth/model/service-model';
-import { AuthorizeUserRequest, SignUpUserRequest } from '../../services/auth/model/request-model';
-import {
-    AuthorizeUserResponse,
-    SignInUserResponsePayload,
-    SignUpUserResponse,
-} from '../../services/auth/model/response-model';
+import { SignInUserRequest, SignUpUserRequest } from '../../services/auth/model/request-model';
+import { SignInUserResponse, SignUpUserResponse } from '../../services/auth/model/response-model';
 import { setUserAuth, startServiceCall } from '../../store/auth/auth-action-creators';
 import { SignInUserAction, SignUpUserAction } from '../../store/auth/auth-action-types';
-import { SignUpUserPayload } from 'src/store/auth/auth-action-payloads';
+import { SignUpUserPayload } from '../../store/auth/auth-action-payloads';
+import { fetchUserDetails, fetchUserProfilePicture } from '../../store/user/user-action-creators';
 
 const signInUserEpic: Epic<RootAction, RootAction, RootState, Services> = (
     action$: ActionsObservable<RootAction>,
@@ -27,13 +24,17 @@ const signInUserEpic: Epic<RootAction, RootAction, RootState, Services> = (
     action$.pipe(
         filter(isOfType(SIGN_IN_USER)),
         concatMap((action) => {
-            return concat(callAuthService(authService, action)).pipe(
+            return concat(callAuthSignInService(authService, action)).pipe(
                 mergeMap((response) => {
-                    const payload: SignInUserResponsePayload = JSON.parse(
-                        response.actionPayload
-                    ) as SignInUserResponsePayload;
-                    localStorage.setItem('token', payload.token);
-                    return concat(of(setUserAuth(payload.userId, payload.token)));
+                    const token: string = response.data.token;
+                    const userId: string = response.data.user.id;
+                    localStorage.setItem('token', token);
+
+                    return concat(
+                        of(setUserAuth(userId, token)),
+                        of(fetchUserDetails(token)),
+                        of(fetchUserProfilePicture(token))
+                    );
                 }),
                 catchError((errorResponse) => {
                     return concat(of(startServiceCall()));
@@ -42,15 +43,15 @@ const signInUserEpic: Epic<RootAction, RootAction, RootState, Services> = (
         })
     );
 
-function callAuthService(authService: AuthServiceModel, action: SignInUserAction): Observable<AuthorizeUserResponse> {
-    const authorizeUserRequest: AuthorizeUserRequest = {
-        type: 'USER_LOG_IN',
-        payload: JSON.stringify({
-            userName: action.payload.userId,
-            password: action.payload.password,
-        }),
+function callAuthSignInService(
+    authService: AuthServiceModel,
+    action: SignInUserAction
+): Observable<SignInUserResponse> {
+    const signInUserRequest: SignInUserRequest = {
+        email: action.payload.userId,
+        password: action.payload.password,
     };
-    return authService.authorizeUser(authorizeUserRequest);
+    return authService.signInUser(signInUserRequest);
 }
 
 const signUpUserEpic: Epic<RootAction, RootAction, RootState, Services> = (

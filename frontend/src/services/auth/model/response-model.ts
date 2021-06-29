@@ -9,10 +9,14 @@ export interface SignInUserResponsePayload {
 }
 
 export interface SignUpUserResponse {
-    data: SignUpUserResponsePayload;
+    data: AuthUserResponsePayload;
 }
 
-export interface SignUpUserResponsePayload {
+export interface SignInUserResponse {
+    data: AuthUserResponsePayload;
+}
+
+export interface AuthUserResponsePayload {
     token: string;
     user: UserInfoPayload;
 }
