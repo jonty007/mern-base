@@ -1,8 +1,5 @@
 const jwt = require('jwt-simple'),
-  {
-    jwtTokenSecret,
-    tokenTimeToExpire
-  } = require('../config');
+  { jwtTokenSecret, tokenTimeToExpire } = require('../config');
 
 const createJWT = function({ data, exp, secret = jwtTokenSecret, hash_type = 'HS512' } = {}) {
   const now = Date.now(),

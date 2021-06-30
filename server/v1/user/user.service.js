@@ -1,6 +1,18 @@
-import {User} from '../../db/models';
+import { User } from '../../db/models';
 import { getProfilePicture } from '../file/file.service';
 import moment from 'moment';
+
+function convertToUserDTO(user) {
+  return {
+    _id: user._id.toString(),
+    firstName: user.firstName,
+    lastName: user.lastName,
+    email: user.email,
+    phone: user.phone,
+    dob: user.dob,
+    profileImageId: user.profileImageId.toString()
+  };
+}
 
 export async function getUserDetails(userId) {
   const user = await User.findById(userId);
@@ -9,21 +21,14 @@ export async function getUserDetails(userId) {
 
 export async function getUserProfilePicture(userId) {
   const user = await User.findById(userId);
-  
+
   const info = await getProfilePicture(user.profileImageId.toString());
   return info;
 }
 
 export async function updateUserProfile(userId, data) {
-  const {
-    firstName,
-    lastName,
-    phoneNumber,
-    dob,
-    profileImageId
-  } = data;
+  const { firstName, lastName, phoneNumber, dob, profileImageId } = data;
 
-  console.log(firstName, lastName, phoneNumber, dob, profileImageId);
   if (!firstName) {
     throw new Error('USER.UPDATE.REQUIRED_FIRST_NAME');
   }
@@ -36,26 +41,30 @@ export async function updateUserProfile(userId, data) {
     throw new Error('USER.UPDATE.REQUIRED_PROFILE_IMAGE');
   }
 
-  const updatedUser = await User.findByIdAndUpdate(userId, {
-    firstName,
-    lastName,
-    phone: phoneNumber,
-    dob,
-    profileImageId
-  });
+  const updatedUser = await User.findByIdAndUpdate(
+    userId,
+    {
+      firstName,
+      lastName,
+      phone: phoneNumber,
+      dob,
+      profileImageId
+    },
+    { new: true }
+  );
 
   return convertToUserDTO(updatedUser);
-
 }
 
-function convertToUserDTO(user) {
-  return {
-    _id: user._id.toString(),
-    firstName: user.firstName,
-    lastName: user.lastName,
-    email: user.email,
-    phone: user.phone,
-    dob: user.dob,
-    profileImageId: user.profileImageId.toString()
+export async function updatePassword(userId, { existingPassword, newPassword }) {
+  const user = await User.findById(userId);
+
+  const passwordMatch = await user.isPasswordMatch(existingPassword);
+  if (!passwordMatch) {
+    throw new Error('USER.UPDATE.PASSWORD_NOT_MATCH');
   }
+  
+  await user.update({
+    password: newPassword
+  });
 }

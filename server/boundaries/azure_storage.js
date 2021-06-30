@@ -82,16 +82,16 @@ const init = async function(azure) {
   },
   downloadAsFile = async function(name, filePath) {
     const containerClient = blobServiceClient.getContainerClient(containerName);
-      const containerExists = await containerClient.exists();
-      if (!containerExists) {
-        return { status: 400, message: "Container doesn't exists" };
-      }
-      const blobClient = containerClient.getBlobClient(name);
-      const blobExists = await blobClient.exists();
-      if (!blobExists) {
-        return { status: 400, message: "Container doesn't exists" };
-      }
-      await blobClient.downloadToFile(filePath);
+    const containerExists = await containerClient.exists();
+    if (!containerExists) {
+      return { status: 400, message: "Container doesn't exists" };
+    }
+    const blobClient = containerClient.getBlobClient(name);
+    const blobExists = await blobClient.exists();
+    if (!blobExists) {
+      return { status: 400, message: "Container doesn't exists" };
+    }
+    await blobClient.downloadToFile(filePath);
   },
   streamToBuffer = async function(readableStream) {
     return new Promise((resolve, reject) => {

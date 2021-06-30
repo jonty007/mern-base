@@ -6,7 +6,6 @@ import isAuthenticated from '../middlewares/is_authenticated';
 const v1router = Router();
 
 export default function(app) {
-
   app.use('/api/v1', v1router);
   v1router.use(require('../v1/auth/auth.controller').default);
   // v1router.use(require('../v1/file/file.controller').default);

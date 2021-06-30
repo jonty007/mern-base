@@ -10,7 +10,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "gulp serve",
-    "lint": "npm run precommit-msg && eslint ./ --fix --cache --ignore-pattern .gitignore",
+    "lint": "eslint ./ --fix --cache --ignore-pattern .gitignore",
     "build:docs": "apidoc  -i ./ -e node_modules/ -o ./dist/apidoc/"
   },
   "author": "Vivek",

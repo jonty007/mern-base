@@ -11,5 +11,6 @@
   "FILE.SERVICE.GET_LOCATION": "Invalid file.",
   "USER.UPDATE.REQUIRED_FIRST_NAME": "Required first name.",
   "USER.UPDATE.REQUIRED_DOB": "Required dob.",
-  "USER.UPDATE.REQUIRED_PROFILE_IMAGE": "Required profile image."
+  "USER.UPDATE.REQUIRED_PROFILE_IMAGE": "Required profile image.",
+  "USER.UPDATE.PASSWORD_NOT_MATCH": "Password didn't match."
 }
