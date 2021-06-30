@@ -35,11 +35,3 @@ export interface SetUserPasswordUpdateDetailsPayload {
     status: string;
     errorMessage?: string;
 }
-
-export interface UpdateUserProfilePicturePayload {
-    newProfilePicture: File;
-}
-
-export interface SetUserProfilePictureIdPayload {
-    profilePictureId: string;
-}

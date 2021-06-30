@@ -36,18 +36,6 @@ export default class App extends React.Component<Props> {
                         Mern App <FaPaw />
                     </Navbar.Brand>
                     <Navbar.Toggle />
-                    <Navbar.Collapse className="justify-content-end">
-                        <Button
-                            variant="outline-primary"
-                            onClick={() => this.submit(ActionSteps.SET_MAIN_DASHBOARD)}
-                            className="ml-4"
-                        >
-                            Home
-                        </Button>
-                        <Button variant="outline-secondary" className="ml-4">
-                            Sign Out
-                        </Button>
-                    </Navbar.Collapse>
                 </Navbar>
                 <Col className="mt-2">
                     <AppRouter />

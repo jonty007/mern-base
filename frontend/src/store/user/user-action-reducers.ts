@@ -4,14 +4,12 @@ import {
     SET_USER_DETAILS,
     SET_USER_PASSWORD_UPDATE_DETAILS,
     SET_USER_PROFILE_PICTURE,
-    SET_USER_PROFILE_PICTURE_ID,
     UPDATE_USER_PASSWORD,
 } from '../../store/user/user-action-names';
 import UserState from './user-state';
 import {
     SetUserDetailsPayload,
     SetUserPasswordUpdateDetailsPayload,
-    SetUserProfilePictureIdPayload,
     SetUserProfilePicturePayload,
 } from '../../store/user/user-action-payloads';
 import { UserActionTypes } from '../../store/user/user-action-types';
@@ -37,10 +35,6 @@ const setUserPasswordUpdateDetails = produce((draftState: UserState, payload: Se
     draftState.userPasswordUpdateStatus = payload.status;
 });
 
-const setUserProfilePictureId = produce((draftState: UserState, payload: SetUserProfilePictureIdPayload) => {
-    draftState.profilePictureId = payload.profilePictureId;
-});
-
 export default function userReducer(state = INITIAL_USER_STATE, action: UserActionTypes): UserState {
     switch (action.type) {
         case SET_USER_DETAILS:
@@ -51,8 +45,6 @@ export default function userReducer(state = INITIAL_USER_STATE, action: UserActi
             return setUpdateUserPasswordStatus(state);
         case SET_USER_PASSWORD_UPDATE_DETAILS:
             return setUserPasswordUpdateDetails(state, action.payload);
-        case SET_USER_PROFILE_PICTURE_ID:
-            return setUserProfilePictureId(state, action.payload);
         default:
             return state;
     }
