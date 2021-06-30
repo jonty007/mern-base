@@ -7,8 +7,6 @@ const upload = multer();
 
 const auth = Router();
 
-
-
 /**
  * @api {post} /auth/sign-up
  * @apiName User Sign-Up
@@ -50,10 +48,9 @@ const auth = Router();
  */
 auth.post('/auth/sign-up', upload.single('profile'), async (req, res, next) => {
   try {
-    const {userId, token} = await signUp(req.body, req.file);
+    const { userId, token } = await signUp(req.body, req.file);
 
-    return res.send({data: {token, user: {id: userId}}})
-    
+    return res.send({ data: { token, user: { id: userId } } });
   } catch (e) {
     if (e.message) {
       return res.status(400).send({
@@ -74,7 +71,7 @@ auth.post('/auth/sign-up', upload.single('profile'), async (req, res, next) => {
  * @apiParam (Body) {String} email User email
  * @apiParam (Body) {String} password Password
  *
-  * @apiSuccessExample {json} Success-Response:
+ * @apiSuccessExample {json} Success-Response:
  * {
  *   data: {
  *    token,  // JWT token of the user logging in
@@ -96,9 +93,9 @@ auth.post('/auth/sign-up', upload.single('profile'), async (req, res, next) => {
  */
 auth.post('/auth/login', async (req, res, next) => {
   try {
-    const {userId, token} = await login(req.body);
+    const { userId, token } = await login(req.body);
 
-    return res.send({data: {token, user: {id: userId}}})
+    return res.send({ data: { token, user: { id: userId } } });
   } catch (e) {
     if (e.message) {
       return res.status(400).send({

@@ -20,10 +20,7 @@ export async function signUp(data, file) {
     throw new Error('AUTH.SIGN_UP.INVALID_DOB');
   }
 
-  if (
-    !password ||
-    !validator.isLength(password, { min: 8 })
-  ) {
+  if (!password || !validator.isLength(password, { min: 8 })) {
     throw new Error('AUTH.SIGN_UP.INVALID_PASSWORD');
   }
 
@@ -48,32 +45,33 @@ export async function signUp(data, file) {
   user.profileImageId = profile._id;
 
   const savedUser = await user.save();
-  const userId =  savedUser._id.toString();
+  const userId = savedUser._id.toString();
   const token_user = {
     id: userId,
     first_name: savedUser.firstName
   };
   const token = createJWT({ data: { user: token_user } });
-  return {token, userId};
+  return { token, userId };
 }
 
-export async function login({email, password}) {
+export async function login({ email, password }) {
   if (!email || !password) {
-    throw new Error("AUTH.LOGIN.INVALID_CREDENTIALS");
+    throw new Error('AUTH.LOGIN.INVALID_CREDENTIALS');
   }
-  const user = await User.findOne({email: email});
+  const user = await User.findOne({ email: email });
   if (!user) {
-    throw new Error("AUTH.LOGIN.USER_NOT_FOUND");
+    throw new Error('AUTH.LOGIN.USER_NOT_FOUND');
   }
-  if(!user.isPasswordMatch(password)) {
-    throw new Error("AUTH.LOGIN.USER_NOT_FOUND");
+  const passwordMatch = await user.isPasswordMatch(password);
+  if (!passwordMatch) {
+    throw new Error('AUTH.LOGIN.USER_NOT_FOUND');
   }
 
-  const userId =  user._id.toString();
+  const userId = user._id.toString();
   const token_user = {
     id: userId,
     first_name: user.firstName
   };
   const token = createJWT({ data: { user: token_user } });
-  return {token, userId};
+  return { token, userId };
 }

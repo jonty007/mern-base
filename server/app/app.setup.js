@@ -8,10 +8,9 @@ const azureStorage = require('../boundaries/azure_storage');
 
 // Initialize a server and create a express app
 export function createApp(config) {
-
   const { azure } = config;
 
-  azureStorage.init(azure)
+  azureStorage.init(azure);
   logger.info('Creating express server...');
 
   const app = express(),
