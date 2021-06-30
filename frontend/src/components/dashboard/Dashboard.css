@@ -1,0 +1,45 @@
+.custom-card {
+    color: black;
+    background-color: white;
+    border-radius: 8px;
+    width: 90%;
+    margin: auto;
+    padding: 0px;
+}
+
+.container-div {
+    background-color: rgb(50, 73, 71);
+    border-radius: 8px;
+    border-color: black;
+    border-width: 10px !important;
+    padding-bottom: 10px;
+    width: 50%;
+}
+
+.content-center {
+    margin: auto;
+}
+
+.manage-password {
+    background-color: transparent;
+}
+
+.profile-details {
+    height: 100%;
+    background-color: rgb(230, 221, 221);
+}
+
+.user-profile {
+    background-color: rgb(36, 196, 182);
+    border-radius: 8px;
+    border-color: black;
+    border-width: 10px !important;
+    padding-bottom: 10px;
+    width: 60%;
+    margin: auto;
+}
+
+.image-width {
+    width: 50%;
+    height: 50%;
+}

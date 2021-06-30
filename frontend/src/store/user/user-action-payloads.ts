@@ -25,3 +25,21 @@ export interface UpdateUserProfilePayload {
     profile: File;
     profileId: string;
 }
+
+export interface UpdateUserPasswordPayload {
+    existingPassword: string;
+    newPassword: string;
+}
+
+export interface SetUserPasswordUpdateDetailsPayload {
+    status: string;
+    errorMessage?: string;
+}
+
+export interface UpdateUserProfilePicturePayload {
+    newProfilePicture: File;
+}
+
+export interface SetUserProfilePictureIdPayload {
+    profilePictureId: string;
+}

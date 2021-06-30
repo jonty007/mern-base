@@ -39,3 +39,11 @@ export interface UpdateProfilePictureData {
 export interface UpdateUserProfileResponse {
     data: UserDetailsData;
 }
+
+export interface UpdateUserPasswordResponse {
+    data: UpdateUserPasswordData;
+}
+
+export interface UpdateUserPasswordData {
+    passwordUpdated: boolean;
+}

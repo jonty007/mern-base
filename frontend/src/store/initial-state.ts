@@ -19,4 +19,5 @@ export const INITIAL_USER_STATE: UserState = {
     dob: '',
     profilePictureBase64: undefined as any,
     profilePictureId: '',
+    userPasswordUpdateStatus: '',
 };

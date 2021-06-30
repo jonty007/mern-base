@@ -20,3 +20,9 @@ export interface UpdateUserProfileRequest {
     dob: string;
     profileImageId: string;
 }
+
+export interface UpdateUserPasswordRequest {
+    token: string;
+    existingPassword: string;
+    newPassword: string;
+}

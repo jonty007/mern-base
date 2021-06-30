@@ -9,4 +9,5 @@ export const STEP_ROUTE_MAP: { [key: string]: string } = {
     [ActionSteps.SET_LANDING_PAGE]: Routes.LANDING_PAGE,
     [ActionSteps.SET_LOGIN_PAGE]: Routes.LOGIN_PAGE,
     [ActionSteps.SET_SIGN_UP_PAGE]: Routes.SIGN_UP_PAGE,
+    [ActionSteps.EDIT_USER_PROFILE]: Routes.USER_PROFILE_EDIT,
 };

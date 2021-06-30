@@ -6,18 +6,27 @@ import RootState from '../state';
 import { Services } from '../services';
 import { RootAction } from '../action';
 
-import { FETCH_USER_DETAILS, FETCH_USER_PROFILE_PICTURE, UPDATE_USER_PROFILE } from './user-action-names';
+import {
+    FETCH_USER_DETAILS,
+    FETCH_USER_PROFILE_PICTURE,
+    UPDATE_USER_PASSWORD,
+    UPDATE_USER_PROFILE,
+    UPDATE_USER_PROFILE_PICTURE,
+} from './user-action-names';
 import { concat, Observable, of } from 'rxjs';
 import { startServiceCall } from '../auth/auth-action-creators';
 import {
     FetchUserDetailsAction,
     FetchUserProfilePictureAction,
+    UpdateUserPasswordAction,
     UpdateUserProfileAction,
+    UpdateUserProfilePictureAction,
 } from '../../store/user/user-action-types';
 import {
     FetchUserDetailsResponse,
     FetchUserProfilePictureResponse,
     UpdateProfilePictureResponse,
+    UpdateUserPasswordResponse,
     UpdateUserProfileResponse,
 } from '../../services/user/model/response-model';
 import UserServiceModel from '../../services/user/model/service-model';
@@ -25,9 +34,16 @@ import {
     FetchUserDetailsRequest,
     FetchUserProfilePictureRequest,
     UpdateProfilePictureRequest,
+    UpdateUserPasswordRequest,
     UpdateUserProfileRequest,
 } from '../../services/user/model/request-model';
-import { fetchUserProfilePicture, setUserDetails, setUserProfilePicture } from '../../store/user/user-action-creators';
+import {
+    fetchUserProfilePicture,
+    setUserDetails,
+    setUserPasswordUpdateDetails,
+    setUserProfilePicture,
+    setUserProfilePictureId,
+} from '../../store/user/user-action-creators';
 import { setNextStep } from '../../store/navigation/navigation-action-creators';
 import { ActionSteps } from '../../routing/constants/steps';
 
@@ -95,31 +111,18 @@ function callUserServiceForFetchProfilePicture(
     return userService.fetchUserProfilePicture(fetchUserProfileRequest);
 }
 
-const updateUserProfilePictureEpic: Epic<RootAction, RootAction, RootState, Services> = (
+const updateUserProfilePictureIdEpic: Epic<RootAction, RootAction, RootState, Services> = (
     action$: ActionsObservable<RootAction>,
     state$: StateObservable<RootState>,
     { userService }
 ) =>
     action$.pipe(
-        filter(isOfType(UPDATE_USER_PROFILE)),
+        filter(isOfType(UPDATE_USER_PROFILE_PICTURE)),
         concatMap((action) => {
             return concat(callUserServiceForUpdateProfilePicture(userService, action, state$.value.auth.token)).pipe(
                 mergeMap((response) => {
                     const fileId: string = response.data.fileId;
-                    return concat(
-                        callUserServiceForUpdateUserProfile(userService, action, fileId, state$.value.auth.token)
-                    ).pipe(
-                        mergeMap((response) => {
-                            return concat(
-                                of(setUserDetails(response.data.userDetails)),
-                                of(fetchUserProfilePicture(state$.value.auth.token)),
-                                of(setNextStep(ActionSteps.SET_MAIN_DASHBOARD))
-                            );
-                        }),
-                        catchError((errorResponse) => {
-                            return concat(of(startServiceCall()));
-                        })
-                    );
+                    return concat(of(setUserProfilePictureId(fileId)));
                 }),
                 catchError((errorResponse) => {
                     return concat(of(startServiceCall()));
@@ -130,23 +133,14 @@ const updateUserProfilePictureEpic: Epic<RootAction, RootAction, RootState, Serv
 
 function callUserServiceForUpdateProfilePicture(
     userService: UserServiceModel,
-    action: UpdateUserProfileAction,
+    action: UpdateUserProfilePictureAction,
     token: string
 ): Observable<UpdateProfilePictureResponse> {
-    if (action.payload.profile) {
-        const updateProfilePictureRequest: UpdateProfilePictureRequest = {
-            token: token,
-            profile: action.payload.profile,
-        };
-        return userService.updateProfilePicture(updateProfilePictureRequest);
-    } else {
-        const updateProfilePictureResponse: UpdateProfilePictureResponse = {
-            data: {
-                fileId: action.payload.profileId,
-            },
-        };
-        return of(updateProfilePictureResponse);
-    }
+    const updateProfilePictureRequest: UpdateProfilePictureRequest = {
+        token: token,
+        profile: action.payload.newProfilePicture,
+    };
+    return userService.updateProfilePicture(updateProfilePictureRequest);
 }
 
 function callUserServiceForUpdateUserProfile(
@@ -167,5 +161,46 @@ function callUserServiceForUpdateUserProfile(
     return userService.updateUserProfile(updateUserProfileRequest);
 }
 
-const USER_EPICS = [fetchUserDetailsEpic, fetchUserProfilePictureEpic, updateUserProfilePictureEpic];
+const updateUserPasswordEpic: Epic<RootAction, RootAction, RootState, Services> = (
+    action$: ActionsObservable<RootAction>,
+    state$: StateObservable<RootState>,
+    { userService }
+) =>
+    action$.pipe(
+        filter(isOfType(UPDATE_USER_PASSWORD)),
+        concatMap((action) => {
+            return concat(callUserServiceForUpdatePassword(userService, action, state$.value.auth.token)).pipe(
+                mergeMap((response) => {
+                    if (response.data.passwordUpdated) {
+                        return concat(of(setUserPasswordUpdateDetails('COMPLETED')));
+                    } else {
+                        return concat(of(setUserPasswordUpdateDetails('FAILED', 'Password update failed!!')));
+                    }
+                }),
+                catchError((errorResponse) => {
+                    return concat(of(startServiceCall()));
+                })
+            );
+        })
+    );
+
+function callUserServiceForUpdatePassword(
+    userService: UserServiceModel,
+    action: UpdateUserPasswordAction,
+    token: string
+): Observable<UpdateUserPasswordResponse> {
+    const updateUserPasswordRequest: UpdateUserPasswordRequest = {
+        token: token,
+        existingPassword: action.payload.existingPassword,
+        newPassword: action.payload.newPassword,
+    };
+    return userService.updateUserPassword(updateUserPasswordRequest);
+}
+
+const USER_EPICS = [
+    fetchUserDetailsEpic,
+    fetchUserProfilePictureEpic,
+    updateUserPasswordEpic,
+    updateUserProfilePictureIdEpic,
+];
 export default USER_EPICS;

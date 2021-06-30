@@ -1,10 +1,11 @@
 import { connect } from 'react-redux';
 
-import Dashboard, { DashboardDispatchProps, DashboardStateProps } from './Dashboard';
+import UserProfileEdit, { UserProfileEditDispatchProps, UserProfileEditStateProps } from './UserProfileEdit';
 import RootState from '../../store/state';
+import { updateUserProfile } from '../../store/user/user-action-creators';
 import { setNextStep } from '../../store/navigation/navigation-action-creators';
 
-function mapStateToProps(state: RootState): DashboardStateProps {
+function mapStateToProps(state: RootState): UserProfileEditStateProps {
     return {
         firstName: state.user.firstName,
         lastName: state.user.lastName,
@@ -17,10 +18,11 @@ function mapStateToProps(state: RootState): DashboardStateProps {
 }
 
 const mapDispatchToProps = {
+    updateUser: updateUserProfile,
     setNextStep: setNextStep,
 };
 
-export default connect<DashboardStateProps, DashboardDispatchProps, Record<string, never>, RootState>(
+export default connect<UserProfileEditStateProps, UserProfileEditDispatchProps, Record<string, never>, RootState>(
     mapStateToProps,
     mapDispatchToProps
-)(Dashboard);
+)(UserProfileEdit);
