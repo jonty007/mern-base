@@ -6,4 +6,5 @@ export default interface UserState {
     dob: string;
     profilePictureBase64: string;
     profilePictureId: string;
+    userPasswordUpdateStatus: string;
 }

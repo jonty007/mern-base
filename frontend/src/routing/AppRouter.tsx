@@ -7,6 +7,7 @@ import history from './history';
 import Login from '../components/auth/signin/SignInContainer';
 import SignUp from '../components/auth/signup/SignUpContainer';
 import Dashboard from '../components/dashboard/DashboardContainer';
+import UserProfileEdit from '../components/user/UserProfileEditContainer';
 
 export default class AppRouter extends React.Component {
     private Loading = () => {
@@ -22,6 +23,7 @@ export default class AppRouter extends React.Component {
                         <Route path={Routes.SIGN_UP_PAGE} component={SignUp} />
                         <Route path={Routes.LANDING_PAGE} component={Login} />
                         <Route path={Routes.MAIN_DASHBOARD} component={Dashboard} />
+                        <Route path={Routes.USER_PROFILE_EDIT} component={UserProfileEdit} />
                         <Route path="/" exact component={this.Loading} />
                     </Switch>
                 </div>

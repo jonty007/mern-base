@@ -6,12 +6,14 @@ import {
     FetchUserDetailsRequest,
     FetchUserProfilePictureRequest,
     UpdateProfilePictureRequest,
+    UpdateUserPasswordRequest,
     UpdateUserProfileRequest,
 } from '../../services/user/model/request-model';
 import {
     FetchUserDetailsResponse,
     FetchUserProfilePictureResponse,
     UpdateProfilePictureResponse,
+    UpdateUserPasswordResponse,
     UpdateUserProfileResponse,
 } from '../../services/user/model/response-model';
 import { request } from 'http';
@@ -62,6 +64,17 @@ const USER_SERVICE: UserServiceModel = {
             },
             body: request,
         }).pipe(map((response) => response.response as UpdateUserProfileResponse));
+    },
+
+    updateUserPassword: (request: UpdateUserPasswordRequest): Observable<UpdateUserPasswordResponse> => {
+        return ajax({
+            url: 'http://localhost:4001/api/v1/user/change-password',
+            method: 'PUT',
+            headers: {
+                Authorization: 'Bearer ' + request.token,
+            },
+            body: request,
+        }).pipe(map((response) => response.response as UpdateUserPasswordResponse));
     },
 };
 
