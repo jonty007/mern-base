@@ -7,8 +7,7 @@ let all = {
   env: process.env.NODE_ENV,
   root: path.normalize(__dirname + '..'), // Root path of server
   port: process.env.PORT || 4001, // Server port
-  jwtTokenSecret:
-    'helloworld',
+  jwtTokenSecret: 'helloworld',
   // serverRootPath: "/api",
   logLevel: process.env.LOG_LEVEL || 'debug',
   tokenTimeToExpire: 4 * 60 * 60 * 1000 // 4 hours
